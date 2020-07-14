@@ -37,6 +37,7 @@ public class AnonymizerService {
 		registerAnonymizer(new IbanAnonymizer());
 
 		registerAnonymizer(new CountryCodeAnonymizer());
+		registerAnonymizer(new FakeStringAnonymizer());
 
 		// Default anonymizers for plain Java objects. If we really don't
 		// know or care how the data looks like.

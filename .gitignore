@@ -8,3 +8,4 @@ target
 /docs/Gemfile.lock
 /docs/.env
 /docs/_site/
+/config/

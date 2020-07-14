@@ -40,6 +40,14 @@ public class Anonimatron {
 	}
 
 	public static void main(String[] args) throws Exception {
+		String[] aa = new String[2];
+		aa[0] = "-config";
+		aa[1] = "./config/PO1.xml";
+//		Class.forName("com.mysql.cj.jdbc.Driver");
+		main2(aa);
+	}
+
+	public static void main2(String[] args) throws Exception {
 		try {
 			CommandLine commandLine = new CommandLine(args);
 
