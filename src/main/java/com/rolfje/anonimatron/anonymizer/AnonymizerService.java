@@ -38,6 +38,7 @@ public class AnonymizerService {
 
 		registerAnonymizer(new CountryCodeAnonymizer());
 		registerAnonymizer(new FakeStringAnonymizer());
+		registerAnonymizer(new FakeDateAnonymizer());
 
 		// Default anonymizers for plain Java objects. If we really don't
 		// know or care how the data looks like.
