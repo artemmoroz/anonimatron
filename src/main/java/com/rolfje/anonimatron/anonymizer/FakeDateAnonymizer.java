@@ -20,7 +20,7 @@ public class FakeDateAnonymizer extends BaseFakeAnonymizer {
         s.setType(getType());
         s.setShortlived(shortlived);
         s.setFrom(from);
-        s.setTo(to);
+        s.setTo(new java.sql.Date(to.getTime()));
         return s;
     }
 
@@ -33,22 +33,24 @@ public class FakeDateAnonymizer extends BaseFakeAnonymizer {
     }
 
     public Synonym anonymize(Object from, int size, boolean shortlived, Map<String, String> params) {
-        Integer ageMin = getIntSafe(params.get("ageMin"));
-        Integer ageMax = getIntSafe(params.get("ageMax"));
-        String locale = params.get(LOCALE);
-        if (ageMax != null) {
-            if (ageMin == null) {
-                ageMin = 0;
+        if (params != null) {
+            Integer ageMin = getIntSafe(params.get("ageMin"));
+            Integer ageMax = getIntSafe(params.get("ageMax"));
+            String locale = params.get(LOCALE);
+            if (ageMax != null) {
+                if (ageMin == null) {
+                    ageMin = 0;
+                }
+                Date to = null;
+                if (ageMax > 0) {
+                    to = getFaker(locale).date().birthday(ageMin, ageMax);
+                } else {
+                    to = getFaker(locale).date().future(ageMax * -365, TimeUnit.DAYS);
+                }
+                DateSynonym s = createDateSynonym(from, to, shortlived);
+                logResult(s);
+                return s;
             }
-            Date to = null;
-            if (ageMax > 0) {
-                to = getFaker(locale).date().birthday(ageMin, ageMax);
-            } else {
-                to = getFaker(locale).date().future(ageMax * 365, TimeUnit.DAYS);
-            }
-            DateSynonym s = createDateSynonym(from, to, shortlived);
-            logResult(s);
-            return s;
         }
         return anonymize(from, size, shortlived);
     }
